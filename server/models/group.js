@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Group.hasMany(models.Todo, {
+        foreignKey: 'groupId',
+        as: 'todos',
+      });
     }
   };
   Group.init({

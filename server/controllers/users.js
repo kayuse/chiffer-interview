@@ -21,7 +21,7 @@ module.exports = {
   },
 
   list(req, res) {
-    return Todo.findAll({
+    return User.findAll({
       include: [
         {
           model: TodoItem,
