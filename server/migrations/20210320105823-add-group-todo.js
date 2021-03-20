@@ -9,7 +9,7 @@ module.exports = {
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
     return Promise.all([
-      queryInterface.addColumn("Todos", "group_id", {
+      queryInterface.addColumn("Todos", "groupId", {
         type: Sequelize.INTEGER,
         allowNull: true,
       }),
@@ -23,6 +23,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    return Promise.all([queryInterface.dropColumn("Todos", "groupId")]);
+    return Promise.all([queryInterface.removeColumn("Todos", "groupId")]);
   },
 };

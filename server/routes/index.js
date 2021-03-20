@@ -17,6 +17,10 @@ module.exports = (app) => {
   app.delete(
     '/api/todos/:todoId/items/:todoItemId', todoItemsController.destroy
   );
+
+  //users api
+
+  
   app.all('/api/todos/:todoId/items', (req, res) => res.status(405).send({
     message: 'Method Not Allowed',
   }));
