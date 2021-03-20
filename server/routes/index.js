@@ -36,7 +36,7 @@ module.exports = (app) => {
 
   //useritems
   app.post("/api/useritem/assign/:userId/:itemId", userItemsController.assign);
-  app.get("/api/useritem/unassign/:userId/:itemId", userItemsController.unassign);
+  app.post("/api/useritem/unassign/:userId/:itemId", userItemsController.unassign);
   //comments
   app.post("/api/comment/create/:userid/:itemId", commentsController.create);
 

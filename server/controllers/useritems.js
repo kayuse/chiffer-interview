@@ -1,43 +1,59 @@
 const Group = require("../models").Group;
 const User = require("../models").User;
+const UserItem = require("../models").UserItem;
 const TodoItem = require("../models").TodoItem;
 
 module.exports = {
   async assign(req, res) {
-    const item = await TodoItem.find({
-      where: {
-        name: req.body.name,
-      },
-    });
-    if (group) {
-      return res.status(400).send({ message: "This group already exist" });
+    const item = await TodoItem.findByPk(req.params.itemId);
+    if (!item) {
+      return res.status(404).send({ message: "This item doesn't exist" });
     }
-    const user = await User.find({
+    const user = await User.findByPk(req.params.userId);
+    if (!user) {
+      return res
+        .status(404)
+        .send({ message: "This user doesn't  already exist" });
+    }
+    const userItem = await UserItem.find({
       where: {
-        name: req.body.name,
+        userId: user.id,
+        todoItemId: req.params.itemId,
       },
     });
-    return Group.create({
-      name:req.body.name
-    })
-      .then((group) => res.status(201).send(group))
-      .catch((error) => res.status(400).send(error));
+    if (userItem) {
+      userItem.update({
+        assigned: true,
+      });
+      return res.status(201).send(userItem);
+    } else {
+      return UserItem.create({
+        userId: user.id,
+        todoItemId: item.id,
+        assigned: true,
+      })
+        .then((userItem) => res.status(201).send(userItem))
+        .catch((error) => res.status(400).send(error));
+    }
   },
 
-  unassign(req, res) {
-    return Group.findAll({
-      include: [
-        {
-          model: Todo,
-          as: "todos",
-        },
-      ],
-      order: [
-        ["createdAt", "DESC"]
-      ],
-    })
-      .then((todos) => res.status(200).send(todos))
-      .catch((error) => res.status(400).send(error));
+  async unassign(req, res) {
+    const userItem = await UserItem.find({
+      where: {
+        userId: req.params.userId,
+        todoItemId: req.params.itemId,
+      },
+    });
+    if (!userItem) {
+      return res
+        .status(404)
+        .send({ message: "You haven't assigned this task to the user yet" });
+    }
+
+    userItem.update({
+      assigned: false,
+    });
+    return res.status(201).send(userItem);
   },
 
   retrieve(req, res) {

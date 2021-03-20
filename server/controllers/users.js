@@ -1,5 +1,5 @@
 const User = require("../models").User;
-const TodoItem = require("../models").TodoItem;
+const UserItem = require("../models").UserItem;
 
 module.exports = {
   async create(req, res) {
@@ -24,35 +24,32 @@ module.exports = {
     return User.findAll({
       include: [
         {
-          model: TodoItem,
-          as: "todoItems",
+          model: UserItem,
+          as: "userItems",
         },
       ],
-      order: [
-        ["createdAt", "DESC"],
-        [{ model: TodoItem, as: "todoItems" }, "createdAt", "ASC"],
-      ],
+      order: [["createdAt", "DESC"]],
     })
-      .then((todos) => res.status(200).send(todos))
+      .then((users) => res.status(200).send(users))
       .catch((error) => res.status(400).send(error));
   },
 
   retrieve(req, res) {
-    return Todo.findById(req.params.todoId, {
+    return User.findById(req.params.userId, {
       include: [
         {
-          model: TodoItem,
-          as: "todoItems",
+          model: UserItem,
+          as: "usertems",
         },
       ],
     })
-      .then((todo) => {
-        if (!todo) {
+      .then((user) => {
+        if (!user) {
           return res.status(404).send({
-            message: "Todo Not Found",
+            message: "User Not Found",
           });
         }
-        return res.status(200).send(todo);
+        return res.status(200).send(user);
       })
       .catch((error) => res.status(400).send(error));
   },
