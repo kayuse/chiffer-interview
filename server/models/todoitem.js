@@ -16,10 +16,12 @@ module.exports = (sequelize, DataTypes) => {
     });
     TodoItem.hasMany(models.UserItem, {
       foreignKey: 'todoItemId',
+      as: 'userItems',
       onDelete: 'CASCADE',
     });
     TodoItem.hasMany(models.Comment, {
       foreignKey: 'todoItemId',
+      as: 'comments',
       onDelete: 'CASCADE',
     });
   };

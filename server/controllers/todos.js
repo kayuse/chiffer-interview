@@ -1,6 +1,7 @@
 const Todo = require("../models").Todo;
 const Group = require("../models").Group;
 const TodoItem = require("../models").TodoItem;
+const Comment = require("../models").Comment;
 
 module.exports = {
   create(req, res) {
@@ -17,6 +18,12 @@ module.exports = {
         {
           model: TodoItem,
           as: "todoItems",
+          include: [
+            {
+              model: Comment,
+              as: "comments",
+            },
+          ],
         },
       ],
       order: [

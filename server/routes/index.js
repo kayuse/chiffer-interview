@@ -38,7 +38,7 @@ module.exports = (app) => {
   app.post("/api/useritem/assign/:userId/:itemId", userItemsController.assign);
   app.post("/api/useritem/unassign/:userId/:itemId", userItemsController.unassign);
   //comments
-  app.post("/api/comment/create/:userid/:itemId", commentsController.create);
+  app.post("/api/comment/create/:userId/:itemId", commentsController.create);
 
 
   app.all("/api/todos/:todoId/items", (req, res) =>
