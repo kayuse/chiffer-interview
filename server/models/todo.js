@@ -10,6 +10,10 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'todoId',
       as: 'todoItems',
     });
+    Todo.belongsTo(models.Group, {
+      foreignKey: 'groupId',
+      onDelete: 'SET NULL',
+    });
   };
   return Todo;
 };
