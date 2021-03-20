@@ -1,5 +1,6 @@
 const User = require("../models").User;
 const UserItem = require("../models").UserItem;
+const Comment = require("../models").Comment;
 
 module.exports = {
   async create(req, res) {
@@ -35,11 +36,15 @@ module.exports = {
   },
 
   retrieve(req, res) {
-    return User.findById(req.params.userId, {
+    return User.findById(req.params.id, {
       include: [
         {
           model: UserItem,
-          as: "usertems",
+          as: "userItems",
+        },
+        {
+          model: Comment,
+          as: "userComments",
         },
       ],
     })

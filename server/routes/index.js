@@ -29,6 +29,7 @@ module.exports = (app) => {
   //users api
   app.post("/api/users", usersController.create);
   app.get("/api/users", usersController.list);
+  app.get("/api/users/:id", usersController.retrieve);
 
   //groupsapi
   app.post("/api/groups", groupsController.create);
